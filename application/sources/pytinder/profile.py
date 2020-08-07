@@ -1,3 +1,5 @@
+"""This module contains classes responsible for your profile.
+"""
 import dateutil
 from application.sources.pytinder.globals import GENDER_MAP, GENDER_MAP_REVERSE, UPDATABLE_FIELDS
 from application.sources.pytinder.exceptions import UserInitializationError
@@ -5,7 +7,7 @@ import datetime
 
 
 class ProfileDescriptor:
-    """this is a python descriptor that allows for
+    """This is a python descriptor that allows for
     dynamic updating of profile data
     """
 
@@ -22,6 +24,7 @@ class ProfileDescriptor:
                 return None
 
     def __set__(self, instance, value):
+
         profile = {}
         for key in UPDATABLE_FIELDS:
             profile[key] = getattr(instance, key)

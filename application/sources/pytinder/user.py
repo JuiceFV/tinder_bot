@@ -1,3 +1,8 @@
+"""Contains the classes responsible for an User.
+User is the profile differs from yours.
+"""
+
+
 import itertools
 import dateutil
 import datetime
@@ -8,6 +13,8 @@ import six
 
 
 class User:
+    """The user-class.
+    """
     def __init__(self, profile_json, session):
         try:
             self._session = session
@@ -32,15 +39,17 @@ class User:
 
     @property
     def instagram_username(self):
+        """Obtain instagram username if it exists.
+        """
         if "instagram" in self._profile_json_format:
             return self._profile_json_format['instagram']['username']
         else:
             return None
 
-    # TODO ->['username']
-
     @property
     def instagram_photos(self):
+        """Obtain instagram photos of an user.
+        """
         if "instagram" in self._profile_json_format:
             return [p['image'] for p in self._profile_json_format['instagram']['photos']]
         else:
@@ -48,26 +57,37 @@ class User:
 
     @property
     def gender(self):
+        """Obtain a gender of an user
+        """
         return GENDER_MAP[int(self._profile_json_format['gender'])]
 
     @property
     def common_likes(self):
+        """Common likes.
+        """
         return [p for p in self._profile_json_format['common_likes']]
 
     @property
     def common_connections(self):
+        """Common connections.
+        """
         return [p for p in self._profile_json_format['common_connections']]
 
     @property
     def thumbnails(self):
+        """Obtain 84x84 photos"""
         return self.get_photos(width=84)
 
     @property
     def photos(self):
+        """Get all photos.
+        """
         return self.get_photos()
 
     @property
     def distance_km(self):
+        """Get distance in kilometers.
+        """
         if 'distance_km' in self._profile_json_format:
             return self._profile_json_format['distance_km']
         elif 'distance_mi' in self._profile_json_format:
@@ -77,6 +97,8 @@ class User:
 
     @property
     def distance_mi(self):
+        """Get distance in miles.
+        """
         if 'distance_mi' in self._profile_json_format:
             return self._profile_json_format['distance_mi']
         elif 'distance_km' in self._profile_json_format:
@@ -86,12 +108,17 @@ class User:
 
     @property
     def age(self):
+        """Get age.
+        """
         today = datetime.date.today()
         return (today.year - self.birth_date.year -
                 ((today.month, today.day) <
                  (self.birth_date.month, self.birth_date.day)))
 
     def get_photos(self, width=640):
+        """Get photos of an user.
+        The base size is 640x640 (max size)
+        """
         if int(width) not in VALID_PHOTO_SIZES:
             raise ValueError("Unsupported width")
         return itertools.chain.from_iterable(
@@ -106,6 +133,8 @@ class User:
 
     @property
     def share_link(self):
+        """Share link.
+        """
         return self._session._api.share(self.id)['link']
 
     def __unicode__(self):
@@ -118,15 +147,32 @@ class User:
         return repr(self.name)
 
     def report(self, cause, text=""):
+        """Report an user.
+
+        :param cause: the cause of a report
+        :param text: the body of a report
+        """
         return self._session._api.report(self.id, cause, text)
 
     def like(self):
+        """Like an user and obtain if match.
+
+        :return: is an user match
+        """
         return self._session._api.like(self.id)['match']
 
     def superlike(self):
+        """Superlike an user and obtain if match.
+
+        :return: is an user match
+        """
         return self._session._api.superlike(self.id)['match']
 
     def dislike(self):
+        """Dislike an user and obtain if match.
+
+        :return: response
+        """
         return self._session._api.dislike(self.id)
 
 
@@ -135,7 +181,8 @@ class RateLimited(User):
 
 
 class Match:
-
+    """The class which define a match and send a message to the matched user
+    """
     def __init__(self, match, _session):
         self._session = _session
         self.id = match["_id"]
@@ -148,15 +195,32 @@ class Match:
             self.messages = [Message(mes, user=self.user) for mes in match['messages']]
 
     def message(self, body):
+        """Send message
+
+        :param body: the body of a message.
+        :return: user's id
+        """
         return self._session._api.message(self.id, body)['_id']
 
     def message_gif(self, giphy_id):
+        """Send a gif message.
+
+        :param giphy_id: id of a gif.
+        :return: user's id
+        """
         return self._session._api.message_gif(self.id, giphy_id)['_id']
 
     def report(self, cause, text=""):
+        """Report an user.
+
+        :param cause: cause of a report
+        :param text: body of report
+        """
         return self._session._api.report(self.id, cause, text)
 
     def delete(self):
+        """Unmatch an user.
+        """
         return self._session._api._delete('/user/matches/' + self.id)
 
     def __repr__(self):

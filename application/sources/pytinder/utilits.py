@@ -1,3 +1,8 @@
+"""The module contains the functions which bolster
+to interact with the facebook.
+"""
+
+
 import re
 import requests
 import robobrowser
@@ -5,6 +10,9 @@ import application.sources.pytinder.globals as globals
 
 
 def get_facebook_access_token(facebook_email, facebook_password):
+    """Obtain a facebook user token.
+    I copied it from github, however I lost the link.
+    """
     browser = robobrowser.RoboBrowser(user_agent=globals.USER_AGENT, parser="lxml")
     browser.open(globals.FB_AUTH_LINK)
     form = browser.get_form()
@@ -28,6 +36,8 @@ def get_facebook_access_token(facebook_email, facebook_password):
 
 
 def get_facebook_id(access_token):
+    """Get facebook id.
+    """
     if "error" in access_token:
         return {"error": "access token could not be retrieved"}
     # Gets facebook ID from access token

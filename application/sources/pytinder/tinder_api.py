@@ -153,6 +153,8 @@ class TinderAPI:
         return self._get(globals.KEY_ENDPOINTS['meta']['endpoint'])
 
     def add_profile_photo(self, facebook_id, x_dist, y_dist, x_offset, y_offset):
+        """Adds a profile's photo to our Tinder profile.
+        """
         data = {
             "transmit": "fb",
             "assets": [
@@ -169,29 +171,48 @@ class TinderAPI:
         return self._request("post", globals.CONTENT_HOST + globals.KEY_ENDPOINTS['meta']['endpoint'], data=data)
 
     def delete_profile_photo(self, photo_id):
+        """Delete profile photo from Tinder profile.
+
+        :param photo_id: id of deleting photo.
+        :return: response
+        """
         data = {"assets": [photo_id]}
 
         return self._request("delete", globals.CONTENT_HOST + globals.KEY_ENDPOINTS['meta']['endpoint'], data=data)
 
     def matches(self, since):
+        """Check how many matches you have.
+        """
         return self.updates(since)['matches']
 
     def update_profile(self, profile):
+        """Update your profile.
+        """
         return self._post(globals.KEY_ENDPOINTS['profile']['endpoint'], profile)
 
     def like(self, user):
+        """Like an user.
+        """
         return self._get(f"/like/{user}")
 
     def dislike(self, user):
+        """Dislike an profile.
+        """
         return self._get(f"/pass/{user}")
 
     def message(self, user, body):
+        """Message to an user.
+        """
         return self._post(f"/user/matches/{user}", {"message": str(body)})
 
     def message_gif(self, user, giphy_id):
+        """Message to an user with a gif.
+        """
         return self._post(f"/user/matches/{user}", {"type": "gif", "gif_id": str(giphy_id)})
 
     def report(self, user, cause=globals.ReportCause.Other, text=""):
+        """Report an user.
+        """
         try:
             cause = int(cause)
         except TypeError:
@@ -211,9 +232,13 @@ class TinderAPI:
         return self._post("/user/ping", {"lat": lat, "lon": lon})
 
     def share(self, user):
+        """Share an user profile.
+        """
         return self._post(f"/user/{user}/share")
 
     def superlike(self, user):
+        """Superlike an user.
+        """
         result = self._post(f"/like/{user}/super")
         if 'limit_exceeded' in result and result['limit_exceeded']:
             raise errors.RequestError("Superlike limit exceeded")
