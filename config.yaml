@@ -1,0 +1,17 @@
+session:
+  facebook_id: 100010429005794
+  facebook_email: <email>
+  facebook_password: <password>
+
+seen_profiles:
+  filename: 'showed_profiles.txt'
+
+canvas:
+  size: {width: 12, height: 6}
+  judges:
+    labels: ['Like', 'Dislike']
+    names: ['milka']
+    boxes_pos: {milka: [0.05, 0.4, 0.1, 0.15]}
+
+model:
+  path: 'model_65p_V3.h5'
