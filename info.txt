@@ -1,0 +1,7 @@
+1) https://github.com/fbessez/Tinder (tinder API)
+2) https://chrisyeh96.github.io/2017/08/08/definitive-guide-python-imports.html (python import troubleshooting)
+3) https://developers.whatismybrowser.com/useragents/explore/software_name/instagram/ (user-agents)
+4) https://towardsdatascience.com/a-guide-to-face-detection-in-python-3eab0f6b9fc1#:~:text=In%20terms%20of%20speed%2C%20HoG,as%20good%20as%20HoG%20overall. (face detection)
+5) https://www.learnopencv.com/face-detection-opencv-dlib-and-deep-learning-c-python/ (Different face detection)
+6) https://github.com/opencv/opencv/tree/master/samples/dnn/face_detector (DNN samples)
+7) https://towardsdatascience.com/machine-learning-basics-part-1-concept-of-regression-31982e8d8ced (recap of ML)
