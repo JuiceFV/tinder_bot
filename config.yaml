@@ -1,7 +1,7 @@
 session:
   facebook_id: 100010429005794
-  facebook_email: 'alexcar19622000@gmail.com'
-  facebook_password: 'JPYh42JS'
+  facebook_email: <email>
+  facebook_password: <password>
 
 seen_profiles:
   filename: 'showed_profiles.txt'
