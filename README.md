@@ -47,7 +47,7 @@ Of course there are a lot of things which are influencing to your match rate. Fo
     <summary>Linux</summary>
 
     >\> cd tinder_bot
-    
+
     >\> python3 -m venv env && source env/bin/activate
 
     </details>
@@ -89,6 +89,7 @@ Of course there are a lot of things which are influencing to your match rate. Fo
    from werkzeug.utils import cached_property
    ```
 5. **Adjust the configuration file (**`config.yaml`**) or create your own one**
+   
    `config.yaml` example:
    ```yaml
    session:
