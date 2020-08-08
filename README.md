@@ -32,9 +32,13 @@ Of course there are a lot of things which are influencing to your match rate. Fo
     <summary>Windows</summary>
 
     >\> cd tinder_bot
+
     >\> python -m venv env
+
     >\> cd env
+
     >\> cd Scripts
+
     >\> activate
 
     </details>
@@ -43,6 +47,7 @@ Of course there are a lot of things which are influencing to your match rate. Fo
     <summary>Linux</summary>
 
     >\> cd tinder_bot
+    
     >\> python3 -m venv env && source env/bin/activate
 
     </details>
