@@ -28,6 +28,8 @@ class Validator:
     @property
     def _list_of_users(self):
         """Returns a generator to a nearby user.
+
+        :return: generator of found users
         """
         return self._session.nearby_users()
 

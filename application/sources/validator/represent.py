@@ -36,7 +36,6 @@ class Canvas:
         self._vote = None
         # Depict if the scrolling mode is on.
         self._scrolling_mode = True
-        # TODO add for i in range(len(judges_data))
         self._boxes_data = [
             {
                 'name': judges_data['names'][0],
@@ -207,12 +206,16 @@ class Canvas:
     @property
     def images_links(self):
         """Returns a list of image's names (URLs).
+
+        :return: images name
         """
         return self._images_names
 
     @property
     def images_as_np_array(self):
         """Returns a list of images.
+
+        :return: images stack
         """
         return self._images_stack
 
