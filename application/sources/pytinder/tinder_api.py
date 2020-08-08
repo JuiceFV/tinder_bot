@@ -19,7 +19,7 @@ class TinderAPI:
     def __init__(self, x_auth_token=None):
         """
         The constructor of the TinderAPI class, it is initializing a session.
-        :param x_auth_token: if an user somehow retrieved XAuthToken, he could pass it.
+        :param x_auth_token: if an user somehow retrieved XAuthToken, he could pass it. (None by default)
         """
         self._session = requests.Session()
         self._session.headers.update(globals.HEADERS)
@@ -34,7 +34,7 @@ class TinderAPI:
     def _tie_link(end_point):
         """The method which helps to create proper URL.
 
-        :param end_point: the endpoint of requested link.
+        :param end_point: the endpoint of a requested link.
         :return: built up link
         """
         _url = end_point.lower()
@@ -84,7 +84,7 @@ class TinderAPI:
 
         :param method: the method of a request (GET, POST, DELETE, UPDATE)
         :param end_point: the endpoint all endpoints are presented here https://github.com/fbessez/Tinder
-        :param data: possible request data.
+        :param data: possible request data. (dict() by default)
         :return: response in json format
         """
         if self._x_auth_token is None:
@@ -112,7 +112,9 @@ class TinderAPI:
         """Wrapper for post request
 
         :param url: a requested link
-        :return: response"""
+        :param data: possible request data. (dict() by default)
+        :return: response
+        """
         return self._request("post", url, data=data)
 
     def _delete(self, url):
@@ -154,6 +156,12 @@ class TinderAPI:
 
     def add_profile_photo(self, facebook_id, x_dist, y_dist, x_offset, y_offset):
         """Adds a profile's photo to our Tinder profile.
+
+        :param facebook_id: your facebook id.
+        :param x_dist: x-axis distance (percent)
+        :param y_dist: y-axis distance (percent)
+        :param x_offset: x-axis offset (percent)
+        :param y_offset: y-axis offset (percent)
         """
         data = {
             "transmit": "fb",
@@ -182,36 +190,63 @@ class TinderAPI:
 
     def matches(self, since):
         """Check how many matches you have.
+
+        :param since: Search for the updates since to
+        :return: found matches
         """
         return self.updates(since)['matches']
 
     def update_profile(self, profile):
         """Update your profile.
+
+        :param profile: updated profile
+        :return: response
         """
         return self._post(globals.KEY_ENDPOINTS['profile']['endpoint'], profile)
 
     def like(self, user):
         """Like an user.
+
+        :param user: user which to like
+        :return: response
         """
         return self._get(f"/like/{user}")
 
     def dislike(self, user):
         """Dislike an profile.
+
+        :param user: user which to like
+        :return: response
         """
         return self._get(f"/pass/{user}")
 
     def message(self, user, body):
         """Message to an user.
+
+        :param user: an user to message to
+        :param body: the body of a message
+        :return: response
         """
         return self._post(f"/user/matches/{user}", {"message": str(body)})
 
     def message_gif(self, user, giphy_id):
         """Message to an user with a gif.
+
+        :param user: an user to message to
+        :param giphy_id: the id of a gif
+        :return: response
         """
         return self._post(f"/user/matches/{user}", {"type": "gif", "gif_id": str(giphy_id)})
 
     def report(self, user, cause=globals.ReportCause.Other, text=""):
         """Report an user.
+
+        :param user: an user to message to
+        :param cause: the class of report's causes:
+        Other/Spam/Inappropriate_Photos/Bad_Offline_Behavior/Inappropriate_Messages
+        (Other by default)
+        :param text: the additional message to a report. ("" by default)
+        :return: response
         """
         try:
             cause = int(cause)
@@ -226,18 +261,35 @@ class TinderAPI:
         return self._post("/report/" + user, data)
 
     def user_info(self, user_id):
+        """Obtain all information about an user
+
+        :param user_id: an user's id
+        :return: response
+        """
         return self._get("/user/" + user_id)
 
     def ping(self, lat, lon):
+        """Particularly update a profile's location
+
+        :param lat: latitude
+        :param lon: longitude
+        :return: response
+        """
         return self._post("/user/ping", {"lat": lat, "lon": lon})
 
     def share(self, user):
         """Share an user profile.
+
+        :param user: an user
+        :return: response
         """
         return self._post(f"/user/{user}/share")
 
     def superlike(self, user):
         """Superlike an user.
+
+        :param user: an user
+        :return: response
         """
         result = self._post(f"/like/{user}/super")
         if 'limit_exceeded' in result and result['limit_exceeded']:
@@ -268,4 +320,8 @@ class TinderAPI:
         return self._delete(f"/message/{message.id}/like")
 
     def liked_messages(self, since):
+        """Obtain liked message.
+
+        :return: liked messages
+        """
         return self.updates(since)['liked_messages']

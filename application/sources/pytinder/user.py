@@ -14,8 +14,15 @@ import six
 
 class User:
     """The user-class.
+    Parse the user's information.
+    And responsible for the interaction your profile with user profile.
     """
     def __init__(self, profile_json, session):
+        """The user definition.
+
+        :param profile_json: an user's profile in the json format.
+        :param session: a session
+        """
         try:
             self._session = session
             self.id = profile_json['_id']
@@ -40,6 +47,8 @@ class User:
     @property
     def instagram_username(self):
         """Obtain instagram username if it exists.
+
+        :return: instagram's username
         """
         if "instagram" in self._profile_json_format:
             return self._profile_json_format['instagram']['username']
@@ -49,6 +58,8 @@ class User:
     @property
     def instagram_photos(self):
         """Obtain instagram photos of an user.
+
+        :return: a generator  with photos
         """
         if "instagram" in self._profile_json_format:
             return [p['image'] for p in self._profile_json_format['instagram']['photos']]
@@ -58,35 +69,48 @@ class User:
     @property
     def gender(self):
         """Obtain a gender of an user
+
+        :return: an user's gender.
         """
         return GENDER_MAP[int(self._profile_json_format['gender'])]
 
     @property
     def common_likes(self):
         """Common likes.
+
+        :return: a generator with common likes
         """
         return [p for p in self._profile_json_format['common_likes']]
 
     @property
     def common_connections(self):
         """Common connections.
+
+        :return: a generator with common connections
         """
         return [p for p in self._profile_json_format['common_connections']]
 
     @property
     def thumbnails(self):
-        """Obtain 84x84 photos"""
+        """Obtain 84x84 photos
+
+        :return: photos of an user with 84x84 resolution.
+        """
         return self.get_photos(width=84)
 
     @property
     def photos(self):
-        """Get all photos.
+        """Get all photos of an user.
+
+        :return: a generator with Tinder's photos.
         """
         return self.get_photos()
 
     @property
     def distance_km(self):
         """Get distance in kilometers.
+
+        :return: a distance in kilometers.
         """
         if 'distance_km' in self._profile_json_format:
             return self._profile_json_format['distance_km']
@@ -98,6 +122,8 @@ class User:
     @property
     def distance_mi(self):
         """Get distance in miles.
+
+        :return: a distance in miles.
         """
         if 'distance_mi' in self._profile_json_format:
             return self._profile_json_format['distance_mi']
@@ -109,6 +135,8 @@ class User:
     @property
     def age(self):
         """Get age.
+
+        :return: age of an user.
         """
         today = datetime.date.today()
         return (today.year - self.birth_date.year -
@@ -118,6 +146,9 @@ class User:
     def get_photos(self, width=640):
         """Get photos of an user.
         The base size is 640x640 (max size)
+
+        :param width: the width of obtained image. It has to be in {84, 172, 320, 640} (640 by default)
+        :return: photo's generator.
         """
         if int(width) not in VALID_PHOTO_SIZES:
             raise ValueError("Unsupported width")
@@ -134,6 +165,8 @@ class User:
     @property
     def share_link(self):
         """Share link.
+
+        :return: the shared link
         """
         return self._session._api.share(self.id)['link']
 
@@ -150,7 +183,8 @@ class User:
         """Report an user.
 
         :param cause: the cause of a report
-        :param text: the body of a report
+        :param text: the body of a report ("" by default)
+        :return: response
         """
         return self._session._api.report(self.id, cause, text)
 
@@ -184,6 +218,11 @@ class Match:
     """The class which define a match and send a message to the matched user
     """
     def __init__(self, match, _session):
+        """Define a match.
+
+        :param match: the json profile of a matched user
+        :param _session: a session
+        """
         self._session = _session
         self.id = match["_id"]
         self.user, self.messages = None, []
@@ -214,12 +253,15 @@ class Match:
         """Report an user.
 
         :param cause: cause of a report
-        :param text: body of report
+        :param text: body of report ("" by default)
+        :return: response
         """
         return self._session._api.report(self.id, cause, text)
 
     def delete(self):
         """Unmatch an user.
+
+        :return: response
         """
         return self._session._api._delete('/user/matches/' + self.id)
 

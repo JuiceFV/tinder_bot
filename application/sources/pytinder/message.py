@@ -59,7 +59,8 @@ class Message:
     def is_liked(self, since=None):
         """Check if messages is liked
 
-        :param since: the date from when start to search.
+        :param since: the date from when start to search. (None by default)
+        :return: is message liked
         """
         for liked_message in self._session._api.liked_messages(since):
             if self.id == liked_message['message_id']:

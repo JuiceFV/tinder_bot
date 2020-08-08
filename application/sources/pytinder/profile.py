@@ -49,7 +49,7 @@ class GenderDescriptor(ProfileDescriptor):
 
 
 class InterestedInDescriptor(ProfileDescriptor):
-    """makes interested in human readable
+    """Makes interested in human readable
     """
 
     def __get__(self, instance, owner):
@@ -64,6 +64,9 @@ class InterestedInDescriptor(ProfileDescriptor):
 
 
 class Profile:
+    """The class responsible for your own profile.
+    Also some fields could be modified.
+    """
     bio = ProfileDescriptor('bio')
     discoverable = ProfileDescriptor('discoverable')
     distance_filter = ProfileDescriptor('distance_filter')
@@ -73,6 +76,11 @@ class Profile:
     gender = GenderDescriptor('gender')
 
     def __init__(self, profile_json, api):
+        """Initialize your profile.
+
+        :param profile_json: your profile in json format
+        :param api: base Tinder's API
+        """
         try:
             self.id = profile_json['_id']
             self._api = api
@@ -110,13 +118,31 @@ class Profile:
 
     @property
     def age(self):
+        """Obtain age.
+
+        :return: age
+        """
         today = datetime.date.today()
         return (today.year - self.birth_date.year -
                 ((today.month, today.day) <
                  (self.birth_date.month, self.birth_date.day)))
 
     def add_photo(self, facebook_id, x_dist=1, y_dist=1, x_offset=0, y_offset=0):
+        """Add a photo to profile.
+
+        :param facebook_id: your facebook id.
+        :param x_dist: x-axis distance (percent) (1 by default)
+        :param y_dist: y-axis distance (percent) (1 by default)
+        :param x_offset: x-axis offset (percent) (0 by default)
+        :param y_offset: y-axis offset (percent) (0 by default)
+        :return: response
+        """
         return self._api.add_profile_photo(facebook_id, x_dist, y_dist, x_offset, y_offset)
 
     def delete_photo(self, photo_id):
+        """Delete a photo.
+
+        :param photo_id: id of deleting photo
+        :return: response
+        """
         return self._api.delete_profile_photo(photo_id)

@@ -1,5 +1,6 @@
 """The module contains the functions which bolster
-to interact with the facebook.
+to interact with the facebook API.
+Due to we need the only access token and facebook ID we use following function.
 """
 
 
@@ -12,6 +13,11 @@ import application.sources.pytinder.globals as globals
 def get_facebook_access_token(facebook_email, facebook_password):
     """Obtain a facebook user token.
     I copied it from github, however I lost the link.
+
+    :param facebook_email: your facebook email
+    :param facebook_password: your facebook password
+
+    :return: access token
     """
     browser = robobrowser.RoboBrowser(user_agent=globals.USER_AGENT, parser="lxml")
     browser.open(globals.FB_AUTH_LINK)
@@ -37,6 +43,9 @@ def get_facebook_access_token(facebook_email, facebook_password):
 
 def get_facebook_id(access_token):
     """Get facebook id.
+
+    :param access_token: facebook access token retrieved from get_facebook_access_token
+    :return: your facebook id
     """
     if "error" in access_token:
         return {"error": "access token could not be retrieved"}

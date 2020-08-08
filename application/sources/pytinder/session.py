@@ -16,8 +16,8 @@ class Session:
     def __init__(self, XAuthToken=None, config=None):
         """The constructor of a tinder-session:
 
-        :parameters
-        config - the configuration of session retrieved from config.yaml file.
+        :param XAuthToken: tinder's x-auth-token (None by default)
+        :param config: session's config-dict (None by default)
         """
         if XAuthToken is None and config is None:
             raise InitializationError("XAuthToken or configuration file (config.yaml) should be initialized.")
@@ -30,11 +30,16 @@ class Session:
     @cached_property
     def profile(self):
         """Set your tinder's profile.
+
+        :return: parsed profile
         """
         return Profile(self._api.profile(), self._api)
 
     def nearby_users(self, limit=10):
         """Obtain users until a session won't abruptly aborted.
+
+        :param limit: request limit (10 by default)
+        :yield: User's profile
         """
         while True:
             response = self._api.recs(limit)
@@ -54,40 +59,60 @@ class Session:
     def update_profile(self, profile):
         """If you wish to update your profile.
         Description, Gender etc.
+
+        :param profile: updated profile
+        :return: response
         """
         return self._api.update_profile(profile)
 
     def update_location(self, latitude, longitude):
         """Update location.
+
+        :param latitude: new latitude
+        :param longitude: new longitude
+        :return: response
         """
         return self._api.ping(latitude, longitude)
 
     def matches(self, since=None):
         """Obtains your matches.
+
+        :param since: search for since when (None by default)
+        :return: matches
         """
         response = self._api.matches(since)
         return (Match(match, self) for match in response if 'person' in match)
 
     def updates(self, since=None):
-        """Check for updates (if somebody match you)"""
+        """Check for updates (if somebody match you)
+
+        :param since: search for since when (None by default)
+        :return: matches
+        """
         response = self._api.updates(since)
         return (Match(match, self) for match in response["matches"] if 'person' in match)
 
     @property
     def likes_remaining(self):
         """Check how many likes remaining.
+
+        :return: remaining number of likes
         """
         return self._api.meta()['rating']['likes_remaining']
 
     @property
     def super_likes_remaining(self):
         """Check how many superlikes (stars) remaining.
+
+        :return: remaining number of superlikes
         """
         return self._api.meta()['rating']['super_likes']['remaining']
 
     @property
     def can_like_in(self):
         """Return the number of seconds before being allowed to issue likes
+
+        :return: number of seconds
         """
         now = int(time())
         limited_until = self._api.meta()['rating'].get('rate_limited_until', now)
@@ -96,6 +121,8 @@ class Session:
     @property
     def banned(self):
         """Check if a profile is banned.
+
+        :return: is profile banned
         """
         return self.profile.banned
 
