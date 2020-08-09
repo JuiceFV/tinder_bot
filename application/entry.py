@@ -143,6 +143,7 @@ def like_or_nope(user, compiled_model):
         if args.show == 1:
             _canvas(photos_set, probability_set)
         expectation = estimate_expectation(probability_set)
+        print("\nExpectation is {} or probability that you liked this profile is {:.2f}%\n".format(expectation, expectation/n * 100))
         if expectation > (n/2):
             return 'like'
         else:
