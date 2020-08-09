@@ -80,17 +80,33 @@ Of course there are a lot of things which are influencing to your match rate. Fo
     from werkzeug import cached_property
     ImportError: cannot import name 'cached_property' from 'werkzeug' (D:\GitHub\tb\env\lib\site-packages\werkzeug\__init__.py)
    ```
-   To fix it you have to follow this path `~\path-to-cloned-rep\env\lib\site-packages\robobrowser\`, open the file `browser.py` and modify the line:
+   To fix it you have to follow this path 
    
-   ```python
-   from werkzeug import cached_property
-   ```
-   
-   to the line:
+    <details>
+    <summary>Windows</summary>
 
-   ```python
-   from werkzeug.utils import cached_property
-   ```
+    `~\path-to-cloned-rep\env\lib\site-packages\robobrowser\`,
+
+    </details>
+
+    <details>
+    <summary>Linux</summary>
+
+    `~/path-to-cloned-repenv/env/lib/python3.8/site-packages/robobrowser/`,
+
+    </details>
+
+    open the file `browser.py` and modify the line:
+    
+    ```python
+    from werkzeug import cached_property
+    ```
+    
+    to the line:
+
+    ```python
+    from werkzeug.utils import cached_property
+    ```
 5. **Adjust the configuration file (**`config.yaml`**) or create your own one**
    
    `config.yaml` example:
