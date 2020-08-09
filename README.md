@@ -14,6 +14,9 @@ Of course there are a lot of things which are influencing to your match rate. Fo
   - [Table of Contents](#table-of-contents)
   - [Instalation Prerequirements](#instalation-prerequirements)
   - [Installation](#installation)
+  - [Usage](#usage)
+    - [Folders creating](#folders-creating)
+    - [Data Sorting](#data-sorting)
 
 ## Instalation Prerequirements
 
@@ -110,19 +113,38 @@ Of course there are a lot of things which are influencing to your match rate. Fo
    model:
        path: 'model_65p_V3.h5'
    ```
-   - **session** -- the session's configuration for the reciprocity with Tinder API. I found two ways to enter in the Tinder account through the code. First, using your phone via SMS (for more detailed information follow the [link](https://github.com/fbessez/Tinder/blob/master/tinder_api_sms.py)). The second one, which I prefered, is the our facebook.
+   - **session** -- the session's configuration for the reciprocity with Tinder API. I found two ways to log in the Tinder account through the code. First, using your phone via SMS (for more detailed information follow the [link](https://github.com/fbessez/Tinder/blob/master/tinder_api_sms.py)). The second one, which I prefered, is the our facebook.
      - **facebook_id** -- your facebook id. It is required for the X-Auth-Token obtaining. To get it you can sieze the functions which are placed at [application/sources/pytinder/utilits.py](https://github.com/JuiceFV/tinder_bot/blob/master/application/sources/pytinder/utilits.py) or use [this](https://lookup-id.com/) link, for example.
      - **facebook_email** -- the email under which you are registered  in the facebook. It is required for the Tinder authorization.
      - **facebook_password** -- the password which you use for the entering to yoour facebook account. Also required for the Tinder authification.
    - **seen_profiles** -- this parameter uses for configuration of blocking already seen accounts. I merely shove profiles id into a file.
      - **filename** -- the file where I put seen ids
    - **canvas** -- the settings of a canvas where girls represent. In the `validation_entry.py` exsists the ability to judge a girl (Like/Dislike).
-     - **size**
-     - **judges**
+     - **size** -- the size of a figure. Defines as a dictionary: `{width: 12, height: 6}`
+     - **judges** -- defines the judges boxes at a figure.
+       - **labels** -- labels for every box (i.e. for each judge) 
+       - **names** -- names of judges, which are conicide with folder's part respectively. For example, if you have folders like this: `name1-yes_name2-no_name3-yes_` (*the reason why does it look like is explained [below](#folders-creating)*) then the name's array looks like `[name1, name2, name3]` 
+       - **boxes_pos** -- the judge's box position at a figure. Passes as a dictionary, *judge name - judge's box position*, for instance `{milka: [left, bottom, width, height]}`
+   - **model** -- the pretrained model, according to which, the network makes a decision.
+     - **path** -- path to a model.
+  
 6. **Launch a script**
    
-   The main script which start to swipe your date
-   >\> python application\entry.py
+   The main script which swipes your date
 
-   The script which allow you to make a dataset (choose girls/boys)
+   >\> python application/entry.py
 
+   The script which allows you to make a dataset (choose girls/boys)
+
+   >\> python application/validation_entry.py
+
+    The script which sorts the images from so-called named files (`name1-no_name2-yes_name3-no_`) to like/dislike folders according to the ratio of the like dislike. The details are explained [below](#data-sorting).
+
+    >\> python applicaton/image_sorting_entry.py
+
+
+## Usage
+
+### Folders creating
+
+### Data Sorting
