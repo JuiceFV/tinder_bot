@@ -1,0 +1,5 @@
+samples
+application/processed_val_images.npy
+application/processed_val_labels.npy
+application/model_65p_V3.h5
+application/milka_model_V3.h5
