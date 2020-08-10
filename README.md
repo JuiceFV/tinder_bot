@@ -34,7 +34,7 @@ Of course there are a lot of things which are influencing to your match rate. Fo
 
 ### Ordinary Installation
 
-1. **Clone repository:**
+1. **Clone repository**
    >\> git clone https://github.com/JuiceFV/tinder_bot.git
 
 2. **Follow to the destination directory, set** `virtualenv` **up and activate it**
@@ -68,11 +68,13 @@ Of course there are a lot of things which are influencing to your match rate. Fo
 3. **Install requirements**
    >\> pip install -r requirements.txt
 
-4. **If you will try to launch any of entrypoint, you will obtain this error:**
+4. **If you will try to launch any of entrypoint, you will obtain this error**
+   
    Yep, robobrowser's developers forgot to add `.utils` up, so we do this instead of them.
    Follow [below](#fix-robobrowser-trouble) to fix this trouble.
   
 5. **Adjust the configuration file (**`config.yaml`**) or create your own one**
+   
    Check the **[Usage:Configuration File](#configuration-file)** to familiarize with details of setting configuration up.
   
 6. **Launch a script**
@@ -95,7 +97,7 @@ Of course there are a lot of things which are influencing to your match rate. Fo
 
 [Setuptools](https://setuptools.readthedocs.io/en/latest/) is a pretty go package for the comfortable installation.
 
-1. **Clone repository:**
+1. **Clone repository**
    >\> git clone https://github.com/JuiceFV/tinder_bot.git
 
 2. **Follow to the destination directory, set** `virtualenv` **up and activate it**
@@ -132,11 +134,13 @@ Of course there are a lot of things which are influencing to your match rate. Fo
 
    **Note:** Please do not use the `python setup.py install`, otherwise you will obtain a bunch of path's errors.
 
-4. **If you will try to launch any of entrypoint, you will obtain this error:**
+4. **If you will try to launch any of entrypoint, you will obtain this error**
+   
    Yep, robobrowser's developers forgot to add `.utils` up, so we do this instead of them.
    Follow [below](#fix-robobrowser-trouble) to fix this trouble.
   
 5. **Adjust the configuration file (**`config.yaml`**) or create your own one**
+   
    Check the **[Usage:Configuration File](#configuration-file)** to familiarize with details of setting configuration up.
   
 6. **Launch a script**
