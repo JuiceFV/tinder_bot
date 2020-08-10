@@ -203,21 +203,21 @@ Eventually, the `samples` directory looks like this (including named like/dislik
 ```
 tinder_bot\samples\
 |
----dislike\
+--- dislike\
 |
----like\
+--- like\
 |
----adam_like\
+--- adam_like\
 |
----adam_dislike\
+--- adam_dislike\
 |
----eve_like\
+--- eve_like\
 |
----eve_dislike\
+--- eve_dislike\
 |
----god_like\
+--- god_like\
 |
----god_dislike\
+--- god_dislike\
 |
 --- adam-no_eve-no_god-no_\
 |
@@ -237,6 +237,12 @@ tinder_bot\samples\
 ```
 
 ### Data Scraping
+
+If you has dealt with folders, you can launch the validation script, tentatively went through the 5 steps of [installation](#installation). Once everything is done, launch the script by typing:
+
+>\> python application/validation_entry.py
+
+from the root directory.
 
 #### Data Sorting
 
