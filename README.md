@@ -396,6 +396,8 @@ If photos are depleted, then we close a figure by pressing "Ctrl", then a new pr
 
 Let's deem you and your friends scrap over thousends and thousends photos. Before we step in [data preprocessing](#data-preprocessing), we should to sort all photos to the like/dislike only or named like/dislike. Me and my friends struggled only with 3000 photos, however it is enough for the example. All details explained after launch instruction.
 
+(Translate: "Files: 3011; folders: 8")
+
 ![nfex](img/nfilesex.png)
 
 **Launch**
@@ -415,6 +417,8 @@ or if you are installed the bot using setuptools
   * **user** -- sorts all photos per user (stores to `name1_like`, `name1_dislike`, `name2_like`, ... etc.)
   * **overall** -- sorts only among `like` and `dislike`
 
+**Functionality**
+
 The sorting occurs according to like/dislike ratio. For instance, `adam-yes_eve-yes_god-no_` 66.(6)% stores to the like and 33.(3)% to the dislike. Because 2 `yes` against 1 `no`, consequantly 2/3 goes to the like and 1/3 to the dislike. In the cmd you can see the progress:
 
 ```
@@ -427,8 +431,12 @@ Copies 202 files from adam-yes_eve-no_god-yes_ to likes and 102 to dislikes
 Copies 293 files from adam-yes_eve-yes_god-no_ to likes and 147 to dislikes
 Copies 537 files from adam-yes_eve-yes_god-yes_ to likes and 0 to dislikes
 ```
-As the result you can see this:
+As the result you can see this (Translate: "Files: 3011; folders: 2"):
 
 ![ovrlld](img/ovrlld.png)
+
+**Note:** The script works well with any quantity of names [1; +inf].
+
+If everything went fine, follow [ahead](#data-preprocessing) to the data preprcessing.
 
 ### Data Preprocessing
