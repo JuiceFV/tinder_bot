@@ -38,8 +38,8 @@ class Canvas:
         self._scrolling_mode = True
         self._boxes_data = [
             {
-                'name': judges_data['names'][0],
-                'rect': judges_data['boxes_pos'][judges_data['names'][0]]
+                'name': judges_data['names'][i],
+                'rect': judges_data['boxes_pos'][judges_data['names'][i]]
             } for i in range(len(judges_data['names']))
         ]
 
