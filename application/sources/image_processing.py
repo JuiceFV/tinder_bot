@@ -5,19 +5,19 @@ The complete description of performance of the function described in notebook.
 import cv2
 import numpy as np
 from skimage.transform import resize
+from path import Path
 
 
-def extract_faces(img):
+def extract_faces(img, img_size):
     """Extracts face from an image.
 
     :param img: an image passed as np-array.
 
     :return: resized image of a face
     """
-    img_size = 100
     faces_in_image_limit = 1
-    model_file = "utils/opencv_face_detector_uint8.pb"
-    config_file = "utils/opencv_face_detector.pbtxt"
+    model_file = Path(__file__).parent.parent / "utils/opencv_face_detector_uint8.pb"
+    config_file = Path(__file__).parent.parent / "utils/opencv_face_detector.pbtxt"
     net = cv2.dnn.readNetFromTensorflow(model_file, config_file)
 
     image_data_result = []
