@@ -21,6 +21,7 @@ Of course there are a lot of things which are influencing to your match rate. Fo
     - [Configuration file](#configuration-file)
     - [Folders creating](#folders-creating)
     - [Data Scraping](#data-scraping)
+      - [Scraping itself](#scraping-itself)
       - [Data Sorting](#data-sorting)
     - [Data Preprocessing](#data-preprocessing)
 
@@ -187,7 +188,7 @@ Due to robobrowser's developers made the last commit on 7 June 2015 and still di
   from werkzeug import cached_property
   ImportError: cannot import name 'cached_property' from 'werkzeug' (D:\GitHub\tb\env\lib\site-packages\werkzeug\__init__.py)
   ```
-  To fix it you have to follow this path 
+  To fix this issue you have to follow this path 
   
   <details>
   <summary>Windows</summary>
@@ -325,16 +326,109 @@ tinder_bot\samples\
 
 ### Data Scraping
 
+#### Scraping itself
+
+If you don't have your own dataset, you may use the script, which helps you to scrap the photos from the Tinder. The script shows entire profile (all profile's photo). The functionality description follows after the launch instruction.
+
+**Launch**
+
 If you has dealt with folders, you can launch the validation script, tentatively went through the 5 steps of [installation](#installation). Once everything is done, launch the script by typing:
 
->\> python application/validation_entry.py
+>\> python application/validation_entry.py [-c/--config:optional]
 
 from the root directory.
 
 or if you used setuptools to install the bot
 
->\> validation
+>\> validation [-c,--config:optional]
+
+**Flags**
+
+* **-c, --config** -- accept a path to a yaml configuration file. Example `validation -c my_own_config.yaml`
+
+**Functionality**
+
+Let's consider, you did everything fine, I'd like to go on with our bible example. We have directory hierarchy as above and the `canvas` in the `config.yaml` looks like
+
+```yaml
+...
+canvas:
+  size: {width: 12, height: 6}
+  judges:
+    labels: ['Like', 'Dislike']
+    names: ['adam', 'eve', 'god']
+    boxes_pos: {
+      adam: [0.05, 0.6, 0.1, 0.15], 
+      eve: [0.05, 0.4, 0.1, 0.15], 
+      god: [0.05, 0.2, 0.1, 0.15]
+      }
+...
+```
+The difference in the second number is the difference in a height. Also you can emphasize that names arranged in the same order as in the folder's name (**it is necessary**). After script's launch you see something like this:
+
+![imgscr](img/imscraping1.png)
+
+In the comand prompt represents 
+1. Tinder user's id
+2. Name
+3. Age
+
+In a figure represents profile's photos. You may interact with the photos, the interacts key listed below:
+
+1. **mouse wheel scrolling** --  scroll through the photos, where scroll-up is the next photo and scroll-down is the preceding photo. Once you reached the last photo, then you start from the first one again and vise versa.
+2. **mouse wheel clicking** -- call the judgment boxes and freeze images scrolling.
+3. **right mouse click (when judgment boxes are active)** -- dismiss judgment boxes and reclaim image scrolling.
+4. **Enter (when judgment boxes are active)** -- if every judge made a choice, then "Enter" calls the function which checks a vote. If some of the checkboxes missed - then it outputs *"Wrong vote"*, otherwise it stores an image to the specific (depends on vote) folder.
+5. **Ctrl** -- close a figure.
+
+By pressing on **mouse wheel** we get such boxes and each judge makes a decision:
+
+![cbfigure](img/cbfigure.png)
+
+As soon as we pressed "Enter", in cmd we can see the directory where a photo has been saved. In my case it is 
+
+`d:\github\tinder_bot\samples/adam-yes_eve-no_god-yes_/640x800_de5bf9da-b04a-491a-974b-5f5ed559ce30.jpg`
+
+Then you can scroll throughout a profile and chose another photos and so on.
+If photos are depleted, then we close a figure by pressing "Ctrl", then a new prfile appears. These last until the script will be aborted.
 
 #### Data Sorting
+
+Let's deem you and your friends scrap over thousends and thousends photos. Before we step in [data preprocessing](#data-preprocessing), we should to sort all photos to the like/dislike only or named like/dislike. Me and my friends struggled only with 3000 photos, however it is enough for the example. All details explained after launch instruction.
+
+![nfex](img/nfilesex.png)
+
+**Launch**
+
+Call the script 
+
+>\> python application/image_sorting_entry.py [-c,--config:optional][-m,--mode:optional]
+
+or if you are installed the bot using setuptools
+
+>\> img_scrap [-c,--config:optional][-m,--mode:optional]
+
+**Flags**
+
+* **-c, --config** -- accept a path to a yaml configuration file. Example `img_scrape -c my_own_config.yaml`
+* **-m, --mode** -- the mode of sorting. There are only 2 modes: `user` and `overall`. (default: `optional`)
+  * **user** -- sorts all photos per user (stores to `name1_like`, `name1_dislike`, `name2_like`, ... etc.)
+  * **overall** -- sorts only among `like` and `dislike`
+
+The sorting occurs according to like/dislike ratio. For instance, `adam-yes_eve-yes_god-no_` 66.(6)% stores to the like and 33.(3)% to the dislike. Because 2 `yes` against 1 `no`, consequantly 2/3 goes to the like and 1/3 to the dislike. In the cmd you can see the progress:
+
+```
+Copies 0 files from adam-no_eve-no_god-no_ to likes and 322 to dislikes
+Copies 104 files from adam-no_eve-no_god-yes_ to likes and 208 to dislikes
+Copies 98 files from adam-no_eve-yes_god-no_ to likes and 198 to dislikes
+Copies 261 files from adam-no_eve-yes_god-yes_ to likes and 131 to dislikes
+Copies 136 files from adam-yes_eve-no_god-no_ to likes and 272 to dislikes
+Copies 202 files from adam-yes_eve-no_god-yes_ to likes and 102 to dislikes
+Copies 293 files from adam-yes_eve-yes_god-no_ to likes and 147 to dislikes
+Copies 537 files from adam-yes_eve-yes_god-yes_ to likes and 0 to dislikes
+```
+As the result you can see this:
+
+![ovrlld](img/ovrlld.png)
 
 ### Data Preprocessing
