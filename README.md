@@ -14,7 +14,11 @@ Of course there are a lot of things which are influencing to your match rate. Fo
   - [Table of Contents](#table-of-contents)
   - [Instalation Prerequirements](#instalation-prerequirements)
   - [Installation](#installation)
+    - [Ordinary Installation](#ordinary-installation)
+    - [Using Setuptools](#using-setuptools)
   - [Usage](#usage)
+    - [Fix robobrowser trouble](#fix-robobrowser-trouble)
+    - [Configuration file](#configuration-file)
     - [Folders creating](#folders-creating)
     - [Data Scraping](#data-scraping)
       - [Data Sorting](#data-sorting)
@@ -27,6 +31,8 @@ Of course there are a lot of things which are influencing to your match rate. Fo
 3. The last, but not the least the **[Anaconda](https://www.anaconda.com/)**. It is required for the [jupyter notebook](https://jupyter.org/). However you could use [Google Drive](https://drive.google.com/) and [Google Colab](https://colab.research.google.com/), instead.
 
 ## Installation
+
+### Ordinary Installation
 
 1. **Clone repository:**
    >\> git clone https://github.com/JuiceFV/tinder_bot.git
@@ -63,90 +69,11 @@ Of course there are a lot of things which are influencing to your match rate. Fo
    >\> pip install -r requirements.txt
 
 4. **If you will try to launch any of entrypoint, you will obtain this error:**
-   
-   ```
-    Traceback (most recent call last):
-    File "validation_entry.py", line 7, in <module>
-    from application.sources import Validator
-    File "D:\GitHub\tb\application\sources\__init__.py", line 5, in <module>
-    from .pytinder import Session
-    File "D:\GitHub\tb\application\sources\pytinder\__init__.py", line 5, in <module>
-    from .session import Session
-    File "D:\GitHub\tb\application\sources\pytinder\session.py", line 5, in <module>
-    from application.sources.pytinder.tinder_api import TinderAPI
-    File "D:\GitHub\tb\application\sources\pytinder\tinder_api.py", line 9, in <module>
-    from application.sources.pytinder.utilits import get_facebook_access_token
-    File "D:\GitHub\tb\application\sources\pytinder\utilits.py", line 9, in <module>
-    import robobrowser
-    File "D:\GitHub\tb\env\lib\site-packages\robobrowser\__init__.py", line 3, in <module>
-    from .browser import RoboBrowser
-    File "D:\GitHub\tb\env\lib\site-packages\robobrowser\browser.py", line 8, in <module>
-    from werkzeug import cached_property
-    ImportError: cannot import name 'cached_property' from 'werkzeug' (D:\GitHub\tb\env\lib\site-packages\werkzeug\__init__.py)
-   ```
-   To fix it you have to follow this path 
-   
-    <details>
-    <summary>Windows</summary>
-
-    `~\path-to-cloned-rep\env\lib\site-packages\robobrowser\`,
-
-    </details>
-
-    <details>
-    <summary>Linux</summary>
-
-    `~/path-to-cloned-repenv/env/lib/python3.8/site-packages/robobrowser/`,
-
-    </details>
-
-    open the file `browser.py` and modify the line:
-    
-    ```python
-    from werkzeug import cached_property
-    ```
-    
-    to the line:
-
-    ```python
-    from werkzeug.utils import cached_property
-    ```
+   Yep, robobrowser's developers forgot to add `.utils` up, so we do this instead of them.
+   Follow [below](#fix-robobrowser-trouble) to fix this trouble.
+  
 5. **Adjust the configuration file (**`config.yaml`**) or create your own one**
-   
-   `config.yaml` example:
-   ```yaml
-   session:
-       facebook_id: 100010429005794
-       facebook_email: <email>
-       facebook_password: <password>
-
-   seen_profiles:
-       filename: 'showed_profiles.txt'
-
-   canvas:
-       size: {width: 12, height: 6}
-       judges:
-           labels: ['Like', 'Dislike']
-           names: ['milka']
-           boxes_pos: {milka: [0.05, 0.4, 0.1, 0.15]}
-
-   model:
-       path: 'model_65p_V3.h5'
-   ```
-   - **session** -- the session's configuration for the reciprocity with Tinder API. I found two ways to log in the Tinder account through the code. First, using your phone via SMS (for more detailed information follow the [link](https://github.com/fbessez/Tinder/blob/master/tinder_api_sms.py)). The second one, which I prefered, is the our facebook.
-     - **facebook_id** -- your facebook id. It is required for the X-Auth-Token obtaining. To get it you can sieze the functions which are placed at [application/sources/pytinder/utilits.py](https://github.com/JuiceFV/tinder_bot/blob/master/application/sources/pytinder/utilits.py) or use [this](https://lookup-id.com/) link, for example.
-     - **facebook_email** -- the email under which you are registered  in the facebook. It is required for the Tinder authorization.
-     - **facebook_password** -- the password which you use for the entering to yoour facebook account. Also required for the Tinder authification.
-   - **seen_profiles** -- this parameter uses for configuration of blocking already seen accounts. I merely shove profiles id into a file.
-     - **filename** -- the file where I put seen ids
-   - **canvas** -- the settings of a canvas where girls represent. In the `validation_entry.py` exsists the ability to judge a girl (Like/Dislike).
-     - **size** -- the size of a figure. Defines as a dictionary: `{width: 12, height: 6}`
-     - **judges** -- defines the judges boxes at a figure.
-       - **labels** -- labels for every box (i.e. for each judge) 
-       - **names** -- names of judges, which are conicide with folder's part respectively. For example, if you have folders like this: `name1-yes_name2-no_name3-yes_` (*the reason why does it look like is explained [below](#folders-creating)*) then the name's array looks like `[name1, name2, name3]` 
-       - **boxes_pos** -- the judge's box position at a figure. Passes as a dictionary, *judge name - judge's box position*, for instance `{milka: [left, bottom, width, height]}`
-   - **model** -- the pre-trained model, according to which, the network makes a decision.
-     - **path** -- path to a model.
+   Check the **[Usage:Configuration File](#configuration-file)** to familiarize with details of setting configuration up.
   
 6. **Launch a script**
    
@@ -164,10 +91,166 @@ Of course there are a lot of things which are influencing to your match rate. Fo
 
       >\> python applicaton/image_sorting_entry.py
 
+### Using Setuptools
 
+[Setuptools](https://setuptools.readthedocs.io/en/latest/) is a pretty go package for the comfortable installation.
+
+1. **Clone repository:**
+   >\> git clone https://github.com/JuiceFV/tinder_bot.git
+
+2. **Follow to the destination directory, set** `virtualenv` **up and activate it**
+
+    <details>
+    <summary>Windows</summary>
+
+    >\> cd tinder_bot
+
+    >\> python -m venv env
+
+    >\> cd env
+
+    >\> cd Scripts
+
+    >\> activate
+
+    >\> cd ../..
+
+    </details>
+
+    <details>
+    <summary>Linux</summary>
+
+    >\> cd tinder_bot
+
+    >\> python3 -m venv env && source env/bin/activate
+
+    </details>
+
+3. **Install everything using setuptools**
+   
+   >\> python setup.py develop
+
+   **Note:** Please do not use the `python setup.py install`, otherwise you will obtain a bunch of path's errors.
+
+4. **If you will try to launch any of entrypoint, you will obtain this error:**
+   Yep, robobrowser's developers forgot to add `.utils` up, so we do this instead of them.
+   Follow [below](#fix-robobrowser-trouble) to fix this trouble.
+  
+5. **Adjust the configuration file (**`config.yaml`**) or create your own one**
+   Check the **[Usage:Configuration File](#configuration-file)** to familiarize with details of setting configuration up.
+  
+6. **Launch a script**
+   
+    ***Note: before the launching of a script, please familiarize with the [usage](#usage) section.***
+
+    The main script which swipes your date
+
+    >\> bot_start
+
+    The script which allows you to make a dataset (choose girls/boys)
+
+    >\> validation
+
+      The script which sorts the images from so-called named files (`name1-no_name2-yes_name3-no_`) to like/dislike folders according to the ratio of the like dislike. The details are explained [below](#data-scraping).
+
+      >\> img_scrap
 ## Usage
 
 Before you start playing with this bot, you have to perform some necessary actions, so that the bot works properly. 
+
+### Fix robobrowser trouble
+
+Due to robobrowser's developers made the last commit on 7 June 2015 and still didn't fix this trouble - you will get it in 2/3 launch scripts. 
+![rbcommit](img/rbcommit.png)
+
+```
+  Traceback (most recent call last):
+  File "validation_entry.py", line 7, in <module>
+  from application.sources import Validator
+  File "D:\GitHub\tb\application\sources\__init__.py", line 5, in <module>
+  from .pytinder import Session
+  File "D:\GitHub\tb\application\sources\pytinder\__init__.py", line 5, in <module>
+  from .session import Session
+  File "D:\GitHub\tb\application\sources\pytinder\session.py", line 5, in <module>
+  from application.sources.pytinder.tinder_api import TinderAPI
+  File "D:\GitHub\tb\application\sources\pytinder\tinder_api.py", line 9, in <module>
+  from application.sources.pytinder.utilits import get_facebook_access_token
+  File "D:\GitHub\tb\application\sources\pytinder\utilits.py", line 9, in <module>
+  import robobrowser
+  File "D:\GitHub\tb\env\lib\site-packages\robobrowser\__init__.py", line 3, in <module>
+  from .browser import RoboBrowser
+  File "D:\GitHub\tb\env\lib\site-packages\robobrowser\browser.py", line 8, in <module>
+  from werkzeug import cached_property
+  ImportError: cannot import name 'cached_property' from 'werkzeug' (D:\GitHub\tb\env\lib\site-packages\werkzeug\__init__.py)
+  ```
+  To fix it you have to follow this path 
+  
+  <details>
+  <summary>Windows</summary>
+
+  `~\path-to-cloned-rep\env\lib\site-packages\robobrowser\`,
+
+  </details>
+
+  <details>
+  <summary>Linux</summary>
+
+  `~/path-to-cloned-repenv/env/lib/python3.8/site-packages/robobrowser/`,
+
+  </details>
+
+  open the file `browser.py` and modify the line:
+    
+  ```python
+  from werkzeug import cached_property
+  ```
+
+  to the line:
+
+  ```python
+  from werkzeug.utils import cached_property
+  ```
+
+### Configuration file
+
+The bot requires a configuration. You can modify the default one or create your own. Note  that your own config doesn't overlap the default, it complements or overwrites claimed fields of the default one.
+   
+  `config.yaml` example:
+  ```yaml
+  session:
+    facebook_id: 100010429005794
+    facebook_email: <email>
+    facebook_password: <password>
+
+  seen_profiles:
+    filename: 'showed_profiles.txt'
+
+  canvas:
+    size: {width: 12, height: 6}
+    judges:
+      labels: ['Like', 'Dislike']
+      names: ['milka']
+      boxes_pos: {milka: [0.05, 0.4, 0.1, 0.15]}
+
+  model:
+    path: 'milka_model_V3.h5'
+    img_size: 100
+```
+- **session** -- the session's configuration for the reciprocity with Tinder API. I found two ways to log in the Tinder account through the code. First, using your phone via SMS (for more detailed information follow the [link](https://github.com/fbessez/Tinder/blob/master/tinder_api_sms.py)). The second one, which I prefered, is the our facebook.
+  - **facebook_id** -- your facebook id. It is required for the X-Auth-Token obtaining. To get it you can sieze the functions which are placed at [application/sources/pytinder/utilits.py](https://github.com/JuiceFV/tinder_bot/blob/master/application/sources/pytinder/utilits.py) or use [this](https://lookup-id.com/) link, for example.
+  - **facebook_email** -- the email under which you are registered  in the facebook. It is required for the Tinder authorization.
+  - **facebook_password** -- the password which you use for the entering to yoour facebook account. Also required for the Tinder authification.
+- **seen_profiles** -- this parameter uses for configuration of blocking already seen accounts. I merely shove profiles id into a file.
+  - **filename** -- the file where I put seen ids
+- **canvas** -- the settings of a canvas where girls represent. In the `validation_entry.py` exsists the ability to judge a girl (Like/Dislike).
+  - **size** -- the size of a figure. Defines as a dictionary: `{width: 12, height: 6}`
+  - **judges** -- defines the judges boxes at a figure.
+    - **labels** -- labels for every box (i.e. for each judge) 
+    - **names** -- names of judges, which are conicide with folder's part respectively. For example, if you have folders like this: `name1-yes_name2-no_name3-yes_` (*the reason why does it look like is explained [below](#folders-creating)*) then the name's array looks like `[name1, name2, name3]` 
+    - **boxes_pos** -- the judge's box position at a figure. Passes as a dictionary, *judge name - judge's box position*, for instance `{milka: [left, bottom, width, height]}`
+- **model** -- the pre-trained model, according to which, the network makes a decision.
+  - **path** -- path to a model.
+  - **img_size** -- the image size on which model has been trained.
 
 ### Folders creating
 
@@ -243,6 +326,10 @@ If you has dealt with folders, you can launch the validation script, tentatively
 >\> python application/validation_entry.py
 
 from the root directory.
+
+or if you used setuptools to install the bot
+
+>\> validation
 
 #### Data Sorting
 
