@@ -2,6 +2,7 @@
 """
 
 from skimage.io import imsave
+from path import Path
 
 
 def save_image(image, image_name, decisions):
@@ -12,7 +13,7 @@ def save_image(image, image_name, decisions):
     :param decisions: the dictionary of each voter's decision.
     :return: True/False depends on if an image is saved.
     """
-    filename = '../samples/'
+    filename = Path(__file__).parent.parent.parent.parent / 'samples/'
     if decisions is None:
         return False
     for name in decisions:

@@ -7,9 +7,10 @@ folders.
 from skimage.io import imsave, imread
 from os import listdir
 from os.path import isfile, join
+from path import Path
 
 # the base path where all samples are placed
-base_path = '../samples/'
+base_path = Path(__file__).parent.parent.parent / 'samples/'
 # path to the "like" folder
 like_path = base_path + 'like/'
 # path to the "dislike" folder
