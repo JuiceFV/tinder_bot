@@ -1,0 +1,2 @@
+include ./*.yaml
+include ./showed_profiles.txt
