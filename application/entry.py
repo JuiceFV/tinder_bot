@@ -16,6 +16,7 @@ import application.sources.pytinder as pytinder
 from application.sources.config_handler import upload_config
 import matplotlib.pyplot as plt
 import argparse
+from path import Path
 
 parser = argparse.ArgumentParser(description="Tinder-Bot user's validator")
 parser.add_argument(
@@ -34,6 +35,7 @@ args = parser.parse_args()
 
 index = 0
 
+cfg = upload_config(args.config)
 
 def obtain_data_for_prediction(user, compiled_model):
     """This function obtains all required data for a prediction.
@@ -52,7 +54,7 @@ def obtain_data_for_prediction(user, compiled_model):
     n = 0
     photos = user.get_photos()
     for photo in photos:
-        face = np.array(extract_faces(imread(photo)))
+        face = np.array(extract_faces(imread(photo), cfg['model']['img_size']))
         if len(face) != 0:
             prediction = compiled_model.predict(face)
             n += 1
@@ -177,8 +179,7 @@ def swipe(_session, compiled_model):
                 print("No photo has been obtained")
 
 
-if __name__ == '__main__':
-    cfg = upload_config(args.config)
-    session = pytinder.Session(config=cfg['session'])
-    model = load_model(cfg['model']['path'])
-    swipe(session, model)
+session = pytinder.Session(config=cfg['session'])
+model_path = Path(__file__).parent / cfg['model']['path']
+model = load_model(model_path)
+swipe(session, model)
