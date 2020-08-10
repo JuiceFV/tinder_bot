@@ -10,7 +10,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description="Tinder-Bot image clusterization")
 parser.add_argument('-c', '--config', type=argparse.FileType('r'), help="Path to configuration file")
-parser.add_argument('-m', '--mode', help="Type of classifying of images", default='user')
+parser.add_argument('-m', '--mode', help="Type of classifying of images", default='overall')
 args = parser.parse_args()
 
 if args.mode == 'user':
