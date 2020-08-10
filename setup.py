@@ -32,7 +32,7 @@ setup(
         'kiwisolver==1.2.0',
         'lxml==4.5.1',
         'Markdown==3.2.2',
-        'matplotlib==3.2.2',
+        'matplotlib==3.3.0',
         'networkx==2.4',
         'numpy==1.19.0',
         'oauthlib==3.1.0',
