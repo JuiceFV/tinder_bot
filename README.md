@@ -16,7 +16,9 @@ Of course there are a lot of things which are influencing to your match rate. Fo
   - [Installation](#installation)
   - [Usage](#usage)
     - [Folders creating](#folders-creating)
-    - [Data Sorting](#data-sorting)
+    - [Data Scraping](#data-scraping)
+      - [Data Sorting](#data-sorting)
+    - [Data Preprocessing](#data-preprocessing)
 
 ## Instalation Prerequirements
 
@@ -43,6 +45,8 @@ Of course there are a lot of things which are influencing to your match rate. Fo
     >\> cd Scripts
 
     >\> activate
+
+    >\> cd ../..
 
     </details>
 
@@ -141,26 +145,99 @@ Of course there are a lot of things which are influencing to your match rate. Fo
        - **labels** -- labels for every box (i.e. for each judge) 
        - **names** -- names of judges, which are conicide with folder's part respectively. For example, if you have folders like this: `name1-yes_name2-no_name3-yes_` (*the reason why does it look like is explained [below](#folders-creating)*) then the name's array looks like `[name1, name2, name3]` 
        - **boxes_pos** -- the judge's box position at a figure. Passes as a dictionary, *judge name - judge's box position*, for instance `{milka: [left, bottom, width, height]}`
-   - **model** -- the pretrained model, according to which, the network makes a decision.
+   - **model** -- the pre-trained model, according to which, the network makes a decision.
      - **path** -- path to a model.
   
 6. **Launch a script**
    
-   The main script which swipes your date
+    ***Note: before the launching of a script, please familiarize with the [usage](#usage) section.***
 
-   >\> python application/entry.py
+    The main script which swipes your date
 
-   The script which allows you to make a dataset (choose girls/boys)
+    >\> python application/entry.py
 
-   >\> python application/validation_entry.py
+    The script which allows you to make a dataset (choose girls/boys)
 
-    The script which sorts the images from so-called named files (`name1-no_name2-yes_name3-no_`) to like/dislike folders according to the ratio of the like dislike. The details are explained [below](#data-sorting).
+    >\> python application/validation_entry.py
 
-    >\> python applicaton/image_sorting_entry.py
+      The script which sorts the images from so-called named files (`name1-no_name2-yes_name3-no_`) to like/dislike folders according to the ratio of the like dislike. The details are explained [below](#data-scraping).
+
+      >\> python applicaton/image_sorting_entry.py
 
 
 ## Usage
 
+Before you start playing with this bot, you have to perform some necessary actions, so that the bot works properly. 
+
 ### Folders creating
 
-### Data Sorting
+**Note:** If you have your own dataset, then you can leave this step behind and go [ahead](#data-preprocessing) to the data preparing for the learning.
+
+However, if you havn't you shall to prepare the folders for judges where photos will bee storing. I decide to keep `samples`-folder in the repository, for the further work (I'd like to replenish the dataset). The name of folders have to adhere to the following pattern: 
+
+1. First, a name of a judge in the lower case.
+2. Second, concatenate a name with the dash symbol (`-`)
+3. Third, add up a decision word (`yes\no`, where yes - like, no - dislike)
+4. And the last, tie all above with underscore line (`_`)
+
+Repeat this algorithm for the every single name. And for each decision of the each judge.
+For example, let's deem we have 3 judges (arranged in exact order): Adam, Eve, God then the folder's example looks like `adam-yes_eve-no_god-yes_`. For the *n* names we have ![2npower](img/2npower.png) possible decisions. In our example, the quantity of all feasible decisions is ![2power3](img/23power.png) = 8.
+
+| Adam | Eve | God |
+|------|-----|-----|
+| 0    | 0   | 0   |
+| 0    | 0   | 1   |
+| 0    | 1   | 0   |
+| 0    | 1   | 1   |
+| 1    | 0   | 0   |
+| 1    | 0   | 1   |
+| 1    | 1   | 0   |
+| 1    | 1   | 1   |
+
+where 1 - like, 0 - dislike.
+Also, you have to have `like\dislike` only folders. After you finish image's scraping, you will be required to destribute them among like/dislike only. The details explained [below](#data-sorting).
+
+**Optionally:** If you'd like so, you can create named like/dislike folders. In our case `adam_like`, `adam_dislike`, `eve_like` ... etc. Deatails also explained [below](#data-sorting)
+
+Eventually, the `samples` directory looks like this (including named like/dislike): 
+```
+tinder_bot\samples\
+|
+---dislike\
+|
+---like\
+|
+---adam_like\
+|
+---adam_dislike\
+|
+---eve_like\
+|
+---eve_dislike\
+|
+---god_like\
+|
+---god_dislike\
+|
+--- adam-no_eve-no_god-no_\
+|
+--- adam-no_eve-no_god-yes_\
+|
+--- adam-no_eve-yes_god-no_\
+|
+--- adam-no_eve-yes_god-yes_\
+|
+--- adam-yes_eve-no_god-no_\
+|
+--- adam-yes_eve-no_god-yes_\
+|
+--- adam-yes_eve-yes_god-no_\
+|
+--- adam-yes_eve-yes_god-yes_\
+```
+
+### Data Scraping
+
+#### Data Sorting
+
+### Data Preprocessing
