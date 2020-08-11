@@ -4,9 +4,9 @@
 
 Hey! guys, girls and other genders. Do you use the [Tinder](https://tinder.com)? If be honest I do not really like this application,  because in most of cases it merely spend your time. If you don't have the premium account your profile will more rarely appear at other users. Of course, if you do not spend the 24 hours per day to this application. So I'd like to extend your knowledge how does Tinder work.
 Of course there are a lot of things which are influencing to your match rate. For instance, your location, age spectrum, nationality, profession, etc. However the main components are your profile (photos, description etc) and your swipe volume. Therefore, if your photos are not exquisite, or at least attractive - your Swipe Volume can equite the disbalance made by your photos. However if you're a student or a worker you don't have a lot of time to swipe the girls or boys 24/7. So, I've created the aplication which will swipe for you. [This](https://github.com/jeffmli/TinderAutomation) guy even broke down the reward system to the formula 
-
-![ROI](img/formula.gif)
-
+<p align="center">
+  <img align="middle " src="img/formula.gif">
+</p>
 "*The better photos/good looking you are you have, the less you need to write a quality message. If you have bad photos, it doesn't matter how good your message is, nobody will respond. If you have great photos, a witty message will significantly boost your ROI. If you don't do any swiping, you'll have zero ROI.*"
 
 ## Table of Contents
@@ -24,6 +24,9 @@ Of course there are a lot of things which are influencing to your match rate. Fo
       - [Scraping itself](#scraping-itself)
       - [Data Sorting](#data-sorting)
     - [Data Preprocessing](#data-preprocessing)
+      - [Haar Cascade](#haar-cascade)
+      - [Deep Neural Network based on Anchor Boxes](#deep-neural-network-based-on-anchor-boxes)
+      - [Data Preparing itself](#data-preparing-itself)
 
 ## Instalation Prerequirements
 
@@ -440,3 +443,64 @@ As the result you can see this (Translate: "Files: 3011; folders: 2"):
 If everything went fine, follow [ahead](#data-preprocessing) to the data preprcessing.
 
 ### Data Preprocessing
+
+The data preprocessing is the necessary step, because a lot of girls take a photo with different background, light, resolution, etc. I decided to detect only the faces, detach the bodies and everything else. If you don't wanna aware the algorithm's underlies, go [ahead](#data-preparing-itself) to the very data processing. 
+
+#### Haar Cascade
+
+The entire algorithm is described in the [data_preparing.ipynb](https://github.com/JuiceFV/tinder_bot/blob/master/application/data_preparing.ipynb). However I shorthand a little bit. Virtually everyone use [haarcascade](https://docs.opencv.org/3.4/db/d28/tutorial_cascade_classifier.html) ([Numberphile video](https://www.youtube.com/watch?v=uEJ71VlUmMQ&vl=tr)). If be short it uses rectangle-features like that:
+
+<img align="left" src="img/haar_features.jpg"></br>
+<img src="img/haar.png"></br>
+
+Then counts a sum of black pixels and sum of white pixels and check its difference. More detailes you can familiarize with are above. The drawback of this method that it recognizes solely the "clear" faces. It means that a face shall not be whether overlapped by phone (and other things), or low resolution photos, or face in profile view. In other words it shall to be rigorously in front viewpoint and clear. 
+
+#### Deep Neural Network based on Anchor Boxes
+
+This is the exact the method which I used. The full description is described here [data_preparing.ipynb](https://github.com/JuiceFV/tinder_bot/blob/master/application/data_preparing.ipynb). But I shorthand, it literally uses [Anchor Boxes](https://www.mathworks.com/help/vision/ug/anchor-boxes-for-object-detection.html) and enchanced R-CNN. The network predict boxes offset and condfidence regard the type (face, car, boat, etc).
+Also, you can familiarize with [SSD](https://arxiv.org/pdf/1512.02325.pdf) algorithm (here is described how is R-CNN (YOLO) enhanced).
+
+![catboxcnn](img/catdogboxes.png)
+
+SSD and YOLO comparison
+
+![yolossd](img/YOLOSSD.png)
+
+#### Data Preparing itself
+
+So, to prepare the data for the learning you required to have Jupyter Notebook or Google Colabs. Open [data_preparing.ipynb](https://github.com/JuiceFV/tinder_bot/blob/master/application/data_preparing.ipynb). Follow to the **Implementation** section and execute each cell orderly untill the section with examples. 
+
+When you call the file's processing function, you should pass a name of a judge, in case if you wanna handle a named like/dislike folders, like I did:
+
+```python
+recap = handle_images('milka')
+```
+
+however, if you don't then just leave the arguments empty.
+
+```python
+recap = handle_images()
+```
+
+the function returns a dictionary with two pandas dataframes:
+1. First key, **face_convincing** -- shows a statistics about faces which were retrieved. 
+   - The **mean** of convincing for all retrieved faces.
+   - The **max** value of the convincing that on a photo was a human face.
+   - The **mean** value of the convincing that on a photo was a human face.
+   - The **standard deviation** shows the spectrum [97.90 - 6.65; 97.90 + 6.65] where 68 percents of a dataset appear.
+  
+  ![fcstat](img/fcstat.png) 
+
+2. Second key, **images** -- shows a statistics regard the handled images
+   - **toatal amount** -- how many photos were evaluated.
+   - **missed amount** -- how many photos were missed, due to SSD can't extract a face from a photo.
+   - **handled ratio** -- ratio of the handled photos
+   - **handled likes** -- quantity of handled, liked photos
+   - **handled dislikes** -- quantity of handled, disliked photos
+
+  ![imstat](img/imstat.png)
+Ultimately, at the `~\path-to-cloned-rep\application` you have to mark two new files:
+
+1. `processed_val_images.npy`
+
+2. `processed_val_labels.npy`
