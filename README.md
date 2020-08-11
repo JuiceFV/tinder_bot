@@ -2,11 +2,12 @@
 
 ![Tinder profile](img/Best-Tinder-Bio-Examples-to-Help-You-Make-a-Perfect-Profile.jpg)
 
-Hey! guys, girls and other genders. Do you use the [Tinder](https://tinder.com)? If be honest I do not really like this application,  because in most of cases it merely spend your time. If you don't have the premium account your profile will more rarely appear at other users. Of course, if you do not spend the 24 hours per day to this application. So I'd like to extend your knowledge how does Tinder work.
+Hey! guys, girls and other genders. Do you use the [Tinder](https://tinder.com)? If be honest I do not really like this application,  because in most of cases it merely spends your time. If you don't have the premium account your profile will more rarely appear at other users. Of course, if you do not spend the 24 hours per day to this application. So I'd like to extend your knowledge how does Tinder work.
 Of course there are a lot of things which are influencing to your match rate. For instance, your location, age spectrum, nationality, profession, etc. However the main components are your profile (photos, description etc) and your swipe volume. Therefore, if your photos are not exquisite, or at least attractive - your Swipe Volume can equite the disbalance made by your photos. However if you're a student or a worker you don't have a lot of time to swipe the girls or boys 24/7. So, I've created the aplication which will swipe for you. [This](https://github.com/jeffmli/TinderAutomation) guy even broke down the reward system to the formula 
 <p align="center">
   <img align="middle " src="img/formula.gif">
 </p>
+
 "*The better photos/good looking you are you have, the less you need to write a quality message. If you have bad photos, it doesn't matter how good your message is, nobody will respond. If you have great photos, a witty message will significantly boost your ROI. If you don't do any swiping, you'll have zero ROI.*"
 
 ## Table of Contents
@@ -33,6 +34,7 @@ Of course there are a lot of things which are influencing to your match rate. Fo
 1. First thing which crucial and demanded is the **[python3.8](https://www.python.org/downloads/)**. Note that the version has to be 3.8 or higher, otherwise the representation will be broken.
 2. It sounds foolish, however you need the **[Git](https://git-scm.com/)**
 3. The last, but not the least the **[Anaconda](https://www.anaconda.com/)**. It is required for the [jupyter notebook](https://jupyter.org/). However you could use [Google Drive](https://drive.google.com/) and [Google Colab](https://colab.research.google.com/), instead.
+4. May be but not required the **[Docker](https://www.docker.com/)**
 
 ## Installation
 
@@ -72,7 +74,7 @@ Of course there are a lot of things which are influencing to your match rate. Fo
 3. **Install requirements**
    >\> pip install -r requirements.txt
 
-4. **If you will try to launch any of entrypoint, you will obtain this error**
+4. **If you will try to launch any of entrypoint, you will obtain error**
    
    Yep, robobrowser's developers forgot to add `.utils` up, so we do this instead of them.
    Follow [below](#fix-robobrowser-trouble) to fix this trouble.
@@ -138,7 +140,7 @@ Of course there are a lot of things which are influencing to your match rate. Fo
 
    **Note:** Please do not use the `python setup.py install`, otherwise you will obtain a bunch of path's errors.
 
-4. **If you will try to launch any of entrypoint, you will obtain this error**
+4. **If you will try to launch any of entrypoint, you will obtain error**
    
    Yep, robobrowser's developers forgot to add `.utils` up, so we do this instead of them.
    Follow [below](#fix-robobrowser-trouble) to fix this trouble.
@@ -499,6 +501,7 @@ the function returns a dictionary with two pandas dataframes:
    - **handled dislikes** -- quantity of handled, disliked photos
 
   ![imstat](img/imstat.png)
+
 Ultimately, at the `~\path-to-cloned-rep\application` you have to mark two new files:
 
 1. `processed_val_images.npy`
