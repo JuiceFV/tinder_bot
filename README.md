@@ -28,6 +28,7 @@ Of course there are a lot of things which are influencing to your match rate. Fo
       - [Haar Cascade](#haar-cascade)
       - [Deep Neural Network based on Anchor Boxes](#deep-neural-network-based-on-anchor-boxes)
       - [Data Preparing itself](#data-preparing-itself)
+  - [Learning Process](#learning-process)
 
 ## Instalation Prerequirements
 
@@ -507,3 +508,5 @@ Ultimately, at the `~\path-to-cloned-rep\application` you have to mark two new f
 1. `processed_val_images.npy`
 
 2. `processed_val_labels.npy`
+
+## Learning Process
