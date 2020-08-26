@@ -510,3 +510,5 @@ Ultimately, at the `~\path-to-cloned-rep\application` you have to mark two new f
 2. `processed_val_labels.npy`
 
 ## Learning Process
+
+It's not done, yet. As soon as I properly fit the ConvNet - I'ill describe it.
