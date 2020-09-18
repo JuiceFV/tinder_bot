@@ -540,7 +540,10 @@ For the face retrieving, I was using a DNN based on SSD, this algorithm can retr
 
 As a result I get 63% AUC and for the such diverse and small dataset it's not so bad. May be it's could be better, however when I was testing the bot, I decided that the training set is really small, sometimes it's not recognize some beauty girls. The result apropos a profile computes according whole profile (its average), however due to small training set the bot is sensitive to the light (brightness), angle (how face is turned) and such details. Further I will be fixing them. However, currently it looks like:
 
-![r1](./img/res1.png)
-![r2](./img/res2.png)
-![r3](./img/res3.png)
-![r4](./img/res4.png)
+
+<img align="left" style="width: 25%" src="img/res1.png">
+<img align="left" style="width: 25%" src="img/res2.png">
+<img align="left" style="width: 25%" src="img/res3.png">
+<img align="left" style="width: 25%" src="img/res4.png"></br>
+
+Also 
