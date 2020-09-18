@@ -28,7 +28,11 @@ Of course there are a lot of things which are influencing to your match rate. Fo
       - [Haar Cascade](#haar-cascade)
       - [Deep Neural Network based on Anchor Boxes](#deep-neural-network-based-on-anchor-boxes)
       - [Data Preparing itself](#data-preparing-itself)
-  - [Learning Process](#learning-process)
+  - [Learning Process (Modeling)](#learning-process-modeling)
+    - [VGG19](#vgg19)
+    - [Additional problem](#additional-problem)
+    - [List of Parameters](#list-of-parameters)
+    - [Results](#results)
 
 ## Instalation Prerequirements
 
@@ -509,6 +513,34 @@ Ultimately, at the `~\path-to-cloned-rep\application` you have to mark two new f
 
 2. `processed_val_labels.npy`
 
-## Learning Process
+## Learning Process (Modeling)
 
-It's not done, yet. As soon as I properly fit the ConvNet - I'ill describe it.
+To model the data, I used a Convolutional Neural Network. This network is the perfect one to solve a problem like this. The problem is detailed and subjective, the algrithm has to derive sufficient amount of features to distinct liked and disliked profiles. And, apparently, the CNN was created for the image's problems solving.
+
+### VGG19
+
+As you may notice, I have a really small dataset, about 3000 images, also these images are really differs among themselves. I mean it contains the girls, who overlaped their face with a phone or a really bad brightness of a photo, etc. Thus I decided to use so-called "[transfer learning](https://en.wikipedia.org/wiki/Transfer_learning)", if shorthand the Wiki, it is the method uses prior knowledges to apply them to different but similar problem. This approach is pretty go with a small dataset.
+
+### Additional problem
+
+For the face retrieving, I was using a DNN based on SSD, this algorithm can retrieve even half-face or its sides or with terrible light etc. Hence the variety of features is much higher than if we'd retrieve only a frontside face. And the accuacy is lower, obviously.
+
+### List of Parameters
+
+1. **Optimizer:** [stochastic gradient descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent)
+   1. **learning rate:** `1e-4`
+   2. **decay:** `1e-6`
+   3. **momentum:** `0.7`
+2. **loss:** `categorical_crossentropy`
+3. **metrics:** `[AUC()]` 
+4. **batch_size:** 16
+5. **epochs:** 10
+
+### Results
+
+As a result I get 63% AUC and for the such diverse and small dataset it's not so bad. May be it's could be better, however when I was testing the bot, I decided that the training set is really small, sometimes it's not recognize some beauty girls. The result apropos a profile computes according whole profile (its average), however due to small training set the bot is sensitive to the light (brightness), angle (how face is turned) and such details. Further I will be fixing them. However, currently it looks like:
+
+![r1](./img/res1.png)
+![r2](./img/res2.png)
+![r3](./img/res3.png)
+![r4](./img/res4.png)
