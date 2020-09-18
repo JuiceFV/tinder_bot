@@ -32,7 +32,7 @@ Of course there are a lot of things which are influencing to your match rate. Fo
     - [VGG19](#vgg19)
     - [Additional problem](#additional-problem)
     - [List of Parameters](#list-of-parameters)
-    - [Results](#results)
+  - [Results](#results)
 
 ## Instalation Prerequirements
 
@@ -521,6 +521,12 @@ To model the data, I used a Convolutional Neural Network. This network is the pe
 
 As you may notice, I have a really small dataset, about 3000 images, also these images are really differs among themselves. I mean it contains the girls, who overlaped their face with a phone or a really bad brightness of a photo, etc. Thus I decided to use so-called "[transfer learning](https://en.wikipedia.org/wiki/Transfer_learning)", if shorthand the Wiki, it is the method uses prior knowledges to apply them to different but similar problem. This approach is pretty go with a small dataset.
 
+```
+Total params: 20,024,384
+Trainable params: 0
+Non-trainable params: 20,024,384
+```
+
 ### Additional problem
 
 For the face retrieving, I was using a DNN based on SSD, this algorithm can retrieve even half-face or its sides or with terrible light etc. Hence the variety of features is much higher than if we'd retrieve only a frontside face. And the accuacy is lower, obviously.
@@ -536,14 +542,96 @@ For the face retrieving, I was using a DNN based on SSD, this algorithm can retr
 4. **batch_size:** 16
 5. **epochs:** 10
 
-### Results
+## Results
 
-As a result I get 63% AUC and for the such diverse and small dataset it's not so bad. May be it's could be better, however when I was testing the bot, I decided that the training set is really small, sometimes it's not recognize some beauty girls. The result apropos a profile computes according whole profile (its average), however due to small training set the bot is sensitive to the light (brightness), angle (how face is turned) and such details. Further I will be fixing them. However, currently it looks like:
+As a result I get 63% AUC and for the such diverse and small dataset it's not so bad. May be it's could be better, however when I was testing the bot, I decided that the training set is really small, sometimes it's not recognize some beauty girls. The result apropos a profile computes according whole profile (its average), however due to small training set the bot is sensitive to the light (brightness), angle (how face is turned) and such details. Further I will be fixing them. 
 
 
-<img align="left" style="width: 25%" src="img/res1.png">
-<img align="left" style="width: 25%" src="img/res2.png">
-<img align="left" style="width: 25%" src="img/res3.png">
-<img align="left" style="width: 25%" src="img/res4.png"></br>
+![r1](img/res1.png)
 
-Also 
+Also, you may see a scrap of something like logs in your cmd/Terminal:
+
+```
+The Bot disliked "Надя"
+-------------------------------------------------------
+The probability it is a human face is: 99.94%
+The probability it is a human face is: 99.98%
+The probability it is a human face is: 99.99%
+
+Expectation is 1.2442310154438019 or probability that you liked this profile is 41.47%
+
+The Bot disliked "Dasha"
+-------------------------------------------------------
+The probability it is a human face is: 98.19%
+
+Expectation is 0.3073808550834656 or probability that you liked this profile is 30.74%
+
+The Bot disliked "Галия"
+-------------------------------------------------------
+The probability it is a human face is: 99.94%
+The probability it is a human face is: 99.91%
+The probability it is a human face is: 98.25%
+The probability it is a human face is: 99.96%
+The probability it is a human face is: 99.91%
+The probability it is a human face is: 99.99%
+The probability it is a human face is: 99.88%
+
+Expectation is 2.675869107246399 or probability that you liked this profile is 38.23%
+
+The Bot disliked "Настя"
+-------------------------------------------------------
+The probability it is a human face is: 99.99%
+The probability it is a human face is: 98.81%
+The probability it is a human face is: 99.90%
+The probability it is a human face is: 98.46%
+The probability it is a human face is: 99.98%
+The probability it is a human face is: 99.22%
+
+Expectation is 2.331650823354721 or probability that you liked this profile is 38.86%
+
+The Bot disliked "Оля"
+-------------------------------------------------------
+The probability it is a human face is: 100.00%
+The probability it is a human face is: 100.00%
+The probability it is a human face is: 100.00%
+
+Expectation is 1.3125692307949066 or probability that you liked this profile is 43.75%
+
+The Bot disliked "Дарья"
+-------------------------------------------------------
+The probability it is a human face is: 99.63%
+The probability it is a human face is: 98.96%
+
+Expectation is 0.7419451773166656 or probability that you liked this profile is 37.10%
+
+The Bot disliked "Вита"
+-------------------------------------------------------
+The probability it is a human face is: 98.04%
+The probability it is a human face is: 90.81%
+The probability it is a human face is: 99.37%
+The probability it is a human face is: 81.47%
+
+Expectation is 1.3354564011096954 or probability that you liked this profile is 33.39%
+
+The Bot disliked "Мария"
+-------------------------------------------------------
+The probability it is a human face is: 99.97%
+
+Expectation is 0.38691678643226624 or probability that you liked this profile is 38.69%
+
+The Bot disliked "Ольга"
+-------------------------------------------------------
+The probability it is a human face is: 100.00%
+The probability it is a human face is: 99.93%
+
+Expectation is 0.8040300607681274 or probability that you liked this profile is 40.20%
+
+The Bot disliked "Ульяна"
+-------------------------------------------------------
+The probability it is a human face is: 99.92%
+The probability it is a human face is: 99.75%
+
+Expectation is 0.8544149100780487 or probability that you liked this profile is 42.72%
+```
+
+
