@@ -14,5 +14,5 @@ canvas:
     boxes_pos: {milka: [0.05, 0.4, 0.1, 0.15]}
 
 model:
-  path: 'milka_model_V3.h5'
-  img_size: 100
+  path: 'model_V3.h5'
+  img_size: 256
