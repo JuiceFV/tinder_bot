@@ -523,8 +523,8 @@ As you may notice, I have a really small dataset, about 3000 images, also these 
 
 ```
 Total params: 20,024,384
-Trainable params: 0
-Non-trainable params: 20,024,384
+Trainable params: 20,024,384
+Non-trainable params: 0
 ```
 
 ### Additional problem
@@ -541,6 +541,8 @@ For the face retrieving, I was using a DNN based on SSD, this algorithm can retr
 3. **metrics:** `[AUC()]` 
 4. **batch_size:** 16
 5. **epochs:** 10
+
+About 10 epoches are enough, if take more (~+5) the network becomes overfitted. The best score I get is ~63%. Obviously, the network isn't a perfect one, but regard the enhancment I'ill discuss further.
 
 ## Results
 
