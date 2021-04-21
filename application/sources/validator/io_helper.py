@@ -1,8 +1,19 @@
 """The module contains the only function which saves images to an appropriate directory.
 """
 
-from skimage.io import imsave
 from path import Path
+import requests
+from PIL import Image
+
+
+def url_to_image(url):
+    """Auxiliary function retrieves photos from URL.
+
+    :param url: photo URL
+    :return: float image.
+    """
+    image = Image.open(requests.get(url, stream=True).raw)
+    return image
 
 
 def save_image(image, image_name, decisions):
@@ -24,9 +35,16 @@ def save_image(image, image_name, decisions):
             filename += '-no_'
 
     filename += '/'
-    file_url_list = image_name.split("/")
-    filename += file_url_list[-1]
+    # Removes the rest after '.<extension>'
+    image_name = image_name.split("?")[0]
+    # Get the part with extension and unique name
+    image_name = image_name.split("/")[-1]
+    # Get rid of the size if it exists
+    image_name = image_name.split("_")[-1]
+    # Get rid of extension (in case .webp it's crucial)
+    file_url_list = image_name.split(".")[0]
+    filename += (file_url_list + '.jpg')
     print(filename)
-    imsave(filename, image)
+    image.save(filename)
     return True
 

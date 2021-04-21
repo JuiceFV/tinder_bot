@@ -2,11 +2,10 @@
 Canvas has to incorporate a list of girl's photos and checkboxes for voting.
 """
 import matplotlib.pyplot as plt
-from skimage.io import imread
+from application.sources.validator.io_helper import url_to_image
 import application.sources.validator.exception as errors
 from application.sources.validator.vote import Vote
 from application.sources.validator.io_helper import save_image
-
 
 class Canvas:
     """The class allows us to represent girl's photos and scroll among them.
@@ -57,13 +56,13 @@ class Canvas:
         if image_links_stack:
             for image in image_links_stack:
                 self._images_names.append(image)
-                self._images_stack.append(imread(image))
+                self._images_stack.append(url_to_image(image))
 
         # If a user passes images_gen then filling self._images_names and self._images_stack via images_gen
         if images_gen:
             for image in images_gen:
                 self._images_names.append(image)
-                self._images_stack.append(imread(image))
+                self._images_stack.append(url_to_image(image))
 
         # Store a number of photos for representation while scrolling.
         self._len_of_images = len(self._images_stack)
@@ -195,13 +194,13 @@ class Canvas:
         if image_links_stack:
             for image in image_links_stack:
                 self._images_names.append(image)
-                self._images_stack.append(imread(image))
+                self._images_stack.append(url_to_image(image))
 
         # If a user passes images_gen then filling self._images_names and self._images_stack via images_gen
         if images_gen:
             for image in images_gen:
                 self._images_names.append(image)
-                self._images_stack.append(imread(image))
+                self._images_stack.append(url_to_image(image))
 
     @property
     def images_links(self):

@@ -8,7 +8,7 @@ from skimage.transform import resize
 from path import Path
 
 
-def extract_faces(img, img_size):
+def extract_faces(im, img_size):
     """Extracts face from an image.
 
     :param img: an image passed as np-array.
@@ -22,6 +22,7 @@ def extract_faces(img, img_size):
 
     image_data_result = []
 
+    img = cv2.cvtColor(np.array(im), cv2.COLOR_RGB2BGR)
     h, w = img.shape[:2]
     blob = cv2.dnn.blobFromImage(cv2.resize(img, (300, 300)), 1.0, (300, 300), [104, 117, 123], False, False)
 

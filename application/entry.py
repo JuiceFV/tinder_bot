@@ -7,6 +7,7 @@ sys.path.append(os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..')))
 
 from skimage.io import imread
+from application.sources.validator.io_helper import url_to_image
 from time import sleep
 from random import randint
 from application.sources.image_processing import extract_faces
@@ -54,12 +55,13 @@ def obtain_data_for_prediction(user, compiled_model):
     n = 0
     photos = user.get_photos()
     for photo in photos:
-        face = np.array(extract_faces(imread(photo), cfg['model']['img_size']))
+        img = url_to_image(photo)
+        face = np.array(extract_faces(img, cfg['model']['img_size']))
         if len(face) != 0:
             prediction = compiled_model.predict(face)
             n += 1
             probability_set.append(prediction[0][1])
-            photos_set.append(imread(photo))
+            photos_set.append(img)
     if n != 0:
         return probability_set, photos_set, n
     else:
@@ -181,5 +183,6 @@ def swipe(_session, compiled_model):
 
 session = pytinder.Session(config=cfg['session'])
 model_path = Path(__file__).parent / cfg['model']['path']
+print(model_path)
 model = load_model(model_path)
 swipe(session, model)
