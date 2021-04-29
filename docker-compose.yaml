@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+    validator:
+        build: .
+        volumes:
+            - ./samples/me-no_:/app/samples/me-no_
+            - ./samples/me-yes_:/app/samples/me-yes_
+            - .:/app
+        command: sh -c 'validation'
+        environment:
+            - DISPLAY=192.168.0.15:0.0
+    bot:
+        build: .
+        command: sh -c 'bot_start -s 1'
+        environment:
+            - DISPLAY=192.168.0.15:0.0
