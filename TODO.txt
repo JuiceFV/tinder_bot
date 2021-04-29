@@ -1,4 +1,2 @@
-Add comentaries
-Add "modify robobrowser" + .utils in browser.py
-Works only with the python 3.8
-Add a filter for the stand out photos (z-scoring)
+README:
+1. Installation method via Docker
