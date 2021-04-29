@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="Tinder Bot",
-    version="1.0.0",
+    version="1.0.1",
     description="The bot which decide to like or dislike a tinder date, depends on you prefers.",
     author="Aleksandr Kasian",
     author_email="aleksandr.juicefv@gmail.com",
