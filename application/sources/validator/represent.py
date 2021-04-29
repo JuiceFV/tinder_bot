@@ -7,6 +7,7 @@ import application.sources.validator.exception as errors
 from application.sources.validator.vote import Vote
 from application.sources.validator.io_helper import save_image
 
+
 class Canvas:
     """The class allows us to represent girl's photos and scroll among them.
     Also, it admits to vote for a girl.
@@ -73,7 +74,6 @@ class Canvas:
         """
         def scroll_function(event):
             """The very scroll function.
-
             :param event: if an user performs an action using mouse's wheel. Event contains details.
             """
             # If the button is up then scrolling to the next photo. If an user currently at last photo then we go from
@@ -175,7 +175,6 @@ class Canvas:
 
     def add_images(self, images_gen=None, image_links_stack=None):
         """The function adds images to the stack.
-
         :param image_links_stack: a list of image's (photo's) urls
         :param images_gen: image generator, which we retrieve from nearby_users()
         """
@@ -205,7 +204,6 @@ class Canvas:
     @property
     def images_links(self):
         """Returns a list of image's names (URLs).
-
         :return: images name
         """
         return self._images_names
@@ -213,7 +211,6 @@ class Canvas:
     @property
     def images_as_np_array(self):
         """Returns a list of images.
-
         :return: images stack
         """
         return self._images_stack

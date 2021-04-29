@@ -8,7 +8,6 @@ from PIL import Image
 
 def url_to_image(url):
     """Auxiliary function retrieves photos from URL.
-
     :param url: photo URL
     :return: float image.
     """
@@ -18,7 +17,6 @@ def url_to_image(url):
 
 def save_image(image, image_name, decisions):
     """The function which save an image in a proper place.
-
     :param image: the image to save.
     :param image_name: the image's name which will be saved.
     :param decisions: the dictionary of each voter's decision.
@@ -47,4 +45,3 @@ def save_image(image, image_name, decisions):
     print(filename)
     image.save(filename)
     return True
-

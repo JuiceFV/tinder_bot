@@ -13,17 +13,17 @@ from time import time
 class Session:
     """Class-wrapper for Tinder API.
     """
-    def __init__(self, XAuthToken=None, config=None):
+    def __init__(self, x_auth_token=None, config=None):
         """The constructor of a tinder-session:
 
-        :param XAuthToken: tinder's x-auth-token (None by default)
+        :param x_auth_token: tinder's x-auth-token (None by default)
         :param config: session's config-dict (None by default)
         """
-        if XAuthToken is None and config is None:
+        if x_auth_token is None and config is None:
             raise InitializationError("XAuthToken or configuration file (config.yaml) should be initialized.")
-        self._api = TinderAPI(x_auth_token=XAuthToken)
+        self._api = TinderAPI(x_auth_token=x_auth_token)
 
-        if XAuthToken is None:
+        if x_auth_token is None:
             self._config = config
             self._api.auth(self._config['facebook_email'], self._config['facebook_password'])
 
@@ -125,4 +125,3 @@ class Session:
         :return: is profile banned
         """
         return self.profile.banned
-

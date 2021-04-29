@@ -10,9 +10,7 @@ from path import Path
 
 def extract_faces(im, img_size):
     """Extracts face from an image.
-
     :param img: an image passed as np-array.
-
     :return: resized image of a face
     """
     faces_in_image_limit = 1

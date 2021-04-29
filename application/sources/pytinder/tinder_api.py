@@ -5,7 +5,7 @@ Also I've adapted pynder for my own purposes by getting rid of some redundant (t
 import requests
 import json
 import threading
-import application.sources.pytinder.globals as globals
+from application.sources.pytinder import globals
 from application.sources.pytinder.utilits import get_facebook_access_token
 import application.sources.pytinder.exceptions as errors
 
@@ -59,9 +59,9 @@ class TinderAPI:
             data=json.dumps({'token': fb_auth_token}),
             timeout=1,
         )
-        try:
+        if response.status_code == 200:
             return response.json()['data']['api_token']
-        except:
+        else:
             return None
 
     def auth(self, facebook_email, facebook_password):
@@ -79,7 +79,7 @@ class TinderAPI:
             self._session.headers.update({'Authorization': "Token token='#{'" + str(self._x_auth_token) + "'}'"})
             self._session.headers.update({'X-Auth-Token': str(self._x_auth_token)})
 
-    def _request(self, method, end_point, data={}):
+    def _request(self, method, end_point, data=None):
         """Basically this method is the wrapper for any request.
 
         :param method: the method of a request (GET, POST, DELETE, UPDATE)
@@ -108,7 +108,7 @@ class TinderAPI:
         """
         return self._request("get", url)
 
-    def _post(self, url, data={}):
+    def _post(self, url, data=None):
         """Wrapper for post request
 
         :param url: a requested link

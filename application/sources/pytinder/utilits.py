@@ -7,7 +7,7 @@ Due to we need the only access token and facebook ID we use following function.
 import re
 import requests
 import robobrowser
-import application.sources.pytinder.globals as globals
+from application.sources.pytinder import globals
 
 
 def get_facebook_access_token(facebook_email, facebook_password):
