@@ -1,4 +1,13 @@
 from setuptools import setup, find_packages
+import pathlib
+import pkg_resources
+
+with pathlib.Path('requirements.txt').open() as requirements_txt:
+    install_requires = [
+        str(requirement)
+        for requirement
+        in pkg_resources.parse_requirements(requirements_txt)
+    ]
 
 setup(
     name="Tinder Bot",
@@ -9,63 +18,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     zip_safe=True,
-    install_requires=[
-        'absl-py==0.9.0',
-        'astunparse==1.6.3',
-        'beautifulsoup4==4.9.1',
-        'cached-property==1.5.1',
-        'cachetools==4.1.1',
-        'certifi==2020.6.20',
-        'chardet==3.0.4',
-        'cycler==0.10.0',
-        'decorator==4.4.2',
-        'gast==0.3.3',
-        'google-auth==1.19.2',
-        'google-auth-oauthlib==0.4.1',
-        'google-pasta==0.2.0',
-        'grpcio==1.30.0',
-        'h5py==2.10.0',
-        'idna==2.9',
-        'imageio==2.8.0',
-        'Keras==2.4.3',
-        'Keras-Preprocessing==1.1.2',
-        'kiwisolver==1.2.0',
-        'lxml==4.5.1',
-        'Markdown==3.2.2',
-        'matplotlib==3.3.0',
-        'networkx==2.4',
-        'numpy==1.19.0',
-        'oauthlib==3.1.0',
-        'opencv-python==4.3.0.36',
-        'opt-einsum==3.3.0',
-        'path==14.0.1',
-        'Pillow==7.1.2',
-        'protobuf==3.12.2',
-        'pyaml==20.4.0',
-        'pyasn1==0.4.8',
-        'pyasn1-modules==0.2.8',
-        'pyparsing==2.4.7',
-        'python-dateutil==2.8.1',
-        'PyWavelets==1.1.1',
-        'PyYAML==5.3.1',
-        'requests==2.24.0',
-        'requests-oauthlib==1.3.0',
-        'robobrowser==0.5.3',
-        'rsa==4.6',
-        'scikit-image==0.17.2',
-        'scipy==1.4.1',
-        'six==1.15.0',
-        'soupsieve==2.0.1',
-        'tensorboard==2.2.2',
-        'tensorboard-plugin-wit==1.7.0',
-        'tensorflow==2.2.0',
-        'tensorflow-estimator==2.2.0',
-        'termcolor==1.1.0',
-        'tifffile==2020.6.3',
-        'urllib3==1.25.9',
-        'Werkzeug==1.0.1',
-        'wrapt==1.12.1'
-    ],
+    install_requires=install_requires,
     entry_points={
         'console_scripts':[
             'bot_start = application.entry',
