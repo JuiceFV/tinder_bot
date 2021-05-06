@@ -1,2 +1,1 @@
-README:
-1. Installation method via Docker
+Имя + фамилиия (N2)
